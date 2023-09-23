@@ -1,29 +1,17 @@
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
          String[] numbers = {"1, 2, 0", "4, 5", "1, 2, 0" , "11, 12, 10"};
 
-         String temp = "";
-        for (int i = 0; i < numbers.length; i++) {
-            temp = temp + numbers[i] + " ";
-        }
-        System.out.println(temp); //
+        String result = Arrays.stream(numbers)
+                .flatMap(str -> Arrays.stream(str.split(", ")))
+                .map(Integer::parseInt)
+                .sorted()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
 
-        temp = temp.replaceAll("," , "").trim();
-
-        System.out.println(temp);//
-
-        String[] res = temp.split(" ");
-
-
-        Integer[] Sorted = new Integer[res.length];
-
-        for (int i = 0; i < res.length; i++) {
-            Sorted[i] = Integer.parseInt(res[i]);
-        }
-        Arrays.sort(Sorted);
-
-        System.out.println(Arrays.toString(Sorted));
+        System.out.println(result);
     }
 }
